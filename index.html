@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAISON DE SOIE — Tuyệt Tác Vải Thời Trang Cao Cấp & May Đo Haute Couture</title>
+    
+    <!-- Google Fonts: Cormorant Garamond (Editorial Luxury) & Plus Jakarta Sans (Modern Clean) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            100: '#FBF5E8',
+                            200: '#F5E6C4',
+                            300: '#E8CE92',
+                            400: '#DBB660',
+                            500: '#C59E3F',
+                            600: '#A6822E',
+                            700: '#846622',
+                        },
+                        sand: {
+                            50: '#FAF8F5',
+                            100: '#F5F1EA',
+                            200: '#EBE4D5',
+                            300: '#DDD2BD',
+                        },
+                        noir: {
+                            900: '#0A0A0C',
+                            800: '#121216',
+                            700: '#1C1C22',
+                            600: '#282832',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    animation: {
+                        'marquee': 'marquee 28s linear infinite',
+                        'marquee-reverse': 'marquee-reverse 32s linear infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
+                        'fade-in': 'fadeIn 0.25s ease-out forwards',
+                        'scale-up': 'scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' }
+                        },
+                        'marquee-reverse': {
+                            '0%': { transform: 'translateX(-50%)' },
+                            '100%': { transform: 'translateX(0%)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.4' },
+                            '50%': { opacity: '0.85' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        scaleUp: {
+                            '0%': { opacity: '0', transform: 'scale(0.95) translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'scale(1) translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP & ScrollTrigger CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- React 18 & Babel CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        /* ==================== CUSTOM SCROLLBAR & SELECTION ==================== */
+        ::-webkit-scrollbar {
+            width: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1ede6;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #0f0f12;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c59e3f;
+            border-radius: 4px;
+        }
+        ::selection {
+            background: #c59e3f;
+            color: #ffffff;
+        }
+
+        /* ==================== CUSTOM CURSOR ==================== */
+        .cursor-dot, .cursor-ring {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+        }
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #c59e3f;
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        .cursor-ring {
+            width: 38px;
+            height: 38px;
+            border: 1.5px solid #c59e3f;
+            transition: width 0.3s, height 0.3s, border-color 0.3s, background-color 0.3s, transform 0.15s ease-out;
+        }
+        body.cursor-hover .cursor-dot {
+            width: 0px;
+            height: 0px;
+        }
+        body.cursor-hover .cursor-ring {
+            width: 64px;
+            height: 64px;
+            background-color: rgba(197, 158, 63, 0.15);
+            border-color: #c59e3f;
+            backdrop-filter: blur(2px);
+        }
+        @media (hover: none) and (pointer: coarse) {
+            .cursor-dot, .cursor-ring { display: none !important; }
+        }
+
+        /* ==================== GLASSMORPHISM CLASSES ==================== */
+        .glass-nav {
+            background: rgba(250, 248, 245, 0.75);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(197, 158, 63, 0.15);
+        }
+        .dark .glass-nav {
+            background: rgba(10, 10, 12, 0.78);
+            border-bottom: 1px solid rgba(220, 180, 96, 0.12);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 20px 40px -15px rgba(28, 28, 34, 0.05);
+        }
+        .dark .glass-card {
+            background: rgba(18, 18, 22, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(220, 180, 96, 0.15);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.4);
+        }
+
+        /* ==================== 3D TILT CONTAINER ==================== */
+        .tilt-container {
+            transform-style: preserve-3d;
+            perspective: 1200px;
+        }
+        .tilt-card {
+            transform-style: preserve-3d;
+            transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+            will-change: transform;
+        }
+        .tilt-content {
+            transform: translateZ(25px);
+        }
+
+        /* ==================== MARQUEE PAUSE ==================== */
+        .marquee-wrapper:hover .animate-marquee,
+        .marquee-wrapper:hover .animate-marquee-reverse {
+            animation-play-state: paused;
+        }
+
+        /* ==================== PARALLAX IMAGE ==================== */
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body class="bg-sand-50 dark:bg-noir-900 text-stone-800 dark:text-stone-100 font-sans transition-colors duration-700 overflow-x-hidden selection:bg-gold-500 selection:text-white">
+
+    <!-- ==================== CUSTOM CURSOR ELEMENTS ==================== -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+    <!-- ==================== STICKY GLASSMORPHIC HEADER ==================== -->
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-500 py-4 px-6 md:px-12 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="#" class="cursor-target group flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full border border-gold-500/40 flex items-center justify-center transition-transform duration-500 group-hover:rotate-180">
+                <span class="font-serif italic font-bold text-gold-600 dark:text-gold-400 text-lg">M</span>
+            </div>
+            <div class="flex flex-col">
+                <span class="font-serif text-2xl font-semibold tracking-[0.22em] uppercase text-stone-900 dark:text-sand-50 transition-colors">
+                    Maison de Soie
+                </span>
+                <span class="text-[9px] tracking-[0.35em] text-gold-600 dark:text-gold-400 font-light -mt-1 uppercase">
+                    Haute Couture Fabrics
+                </span>
+            </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden lg:flex items-center space-x-9 text-xs uppercase tracking-[0.2em] font-medium text-stone-600 dark:text-stone-300">
+            <a href="#hero" class="cursor-target relative py-1 hover:text-gold-600 dark:hover:text-gold-400 transition-colors group">
+                Trang Chủ
+                <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gold-500 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="#fabrics" class="cursor-target relative py-1 hover:text-gold-600 dark:hover:text-gold-400 transition-colors group">
+                Bộ Sưu Tập
+                <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gold-500 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="#craftsmanship" class="cursor-target relative py-1 hover:text-gold-600 dark:hover:text-gold-400 transition-colors group">
+                Nghệ Thuật Dệt
+                <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gold-500 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="#swatch-lab" class="cursor-target relative py-1 hover:text-gold-600 dark:hover:text-gold-400 transition-colors group">
+                Thử Nghiệm Vải
+                <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gold-500 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="#contact" class="cursor-target relative py-1 hover:text-gold-600 dark:hover:text-gold-400 transition-colors group">
+                Atelier & Liên Hệ
+                <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gold-500 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+        </nav>
+
+        <!-- Action Tools: Dark/Light Mode & Cart -->
+        <div class="flex items-center space-x-5">
+            <!-- Theme Toggle Button -->
+            <button id="theme-toggle" aria-label="Toggle Theme" class="cursor-target magnetic-btn w-10 h-10 rounded-full border border-stone-300/70 dark:border-noir-600 flex items-center justify-center text-stone-700 dark:text-gold-400 hover:border-gold-500 dark:hover:border-gold-400 transition-all">
+                <i class="fa-solid fa-moon dark:hidden text-sm"></i>
+                <i class="fa-solid fa-sun hidden dark:inline text-sm"></i>
+            </button>
+
+            <!-- Cart Trigger -->
+            <button id="cart-toggle" aria-label="Giỏ hàng mẫu vải" class="cursor-target magnetic-btn relative w-10 h-10 rounded-full border border-stone-300/70 dark:border-noir-600 flex items-center justify-center text-stone-700 dark:text-sand-50 hover:border-gold-500 transition-all">
+                <i class="fa-solid fa-bag-shopping text-sm"></i>
+                <span id="cart-count" class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-gold-500 text-white text-[9px] font-bold flex items-center justify-center">2</span>
+            </button>
+
+            <!-- Mobile Hamburger -->
+            <button id="mobile-menu-btn" aria-label="Open Menu" class="cursor-target lg:hidden text-xl text-stone-800 dark:text-sand-50 focus:outline-none">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-sand-50/95 dark:bg-noir-900/95 backdrop-blur-2xl flex flex-col justify-center items-center space-y-8 opacity-0 pointer-events-none transition-all duration-500 lg:hidden">
+        <a href="#hero" class="mobile-nav-link font-serif text-3xl hover:text-gold-500 transition-colors">Trang Chủ</a>
+        <a href="#fabrics" class="mobile-nav-link font-serif text-3xl hover:text-gold-500 transition-colors">Bộ Sưu Tập Vải</a>
+        <a href="#craftsmanship" class="mobile-nav-link font-serif text-3xl hover:text-gold-500 transition-colors">Nghệ Thuật Thủ Công</a>
+        <a href="#swatch-lab" class="mobile-nav-link font-serif text-3xl hover:text-gold-500 transition-colors">Thử Nghiệm Mẫu Vải</a>
+        <a href="#contact" class="mobile-nav-link font-serif text-3xl hover:text-gold-500 transition-colors">Atelier Liên Hệ</a>
+    </div>
+
+    <!-- ==================== HERO SECTION (100vh with Silk Parallax) ==================== -->
+    <section id="hero" class="relative w-full min-h-screen flex items-center justify-center overflow-hidden pt-20 px-6">
+        <div id="hero-bg" class="absolute inset-0 z-0 scale-110">
+            <img src="https://images.unsplash.com/photo-1528458876861-544fd1761a91?q=80&w=2000&auto=format&fit=crop" 
+                 alt="Silk drapery background" 
+                 class="w-full h-full object-cover object-center filter brightness-[0.92] dark:brightness-[0.42] contrast-[1.05] transition-all duration-700">
+            <div class="absolute inset-0 bg-gradient-to-b from-sand-50/60 via-transparent to-sand-50 dark:from-noir-900/80 dark:via-noir-900/40 dark:to-noir-900"></div>
+        </div>
+
+        <div class="absolute top-1/4 -left-20 w-96 h-96 bg-gold-400/20 dark:bg-gold-500/10 rounded-full blur-[120px] pointer-events-none animate-pulse-glow"></div>
+        <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-amber-500/15 dark:bg-gold-600/10 rounded-full blur-[140px] pointer-events-none animate-pulse-glow" style="animation-delay: 2s;"></div>
+
+        <div class="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center">
+            <div class="scroll-reveal inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-500/30 glass-card mb-8">
+                <span class="w-1.5 h-1.5 rounded-full bg-gold-500 animate-ping"></span>
+                <span class="text-[11px] uppercase tracking-[0.3em] font-medium text-gold-700 dark:text-gold-300">
+                    Atelier Dệt May Hoàng Gia • Kỷ Nguyên Mới
+                </span>
+            </div>
+
+            <h1 id="hero-title" class="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-normal tracking-tight text-stone-900 dark:text-stone-50 leading-[1.08] mb-6 overflow-hidden">
+                <span class="block">Nơi Dệt Nên Bản Giao Hưởng</span>
+                <span class="italic font-light text-gold-600 dark:text-gold-400">Của Lụa & Nghệ Thuật</span>
+            </h1>
+
+            <p class="scroll-reveal max-w-2xl text-stone-600 dark:text-stone-300 font-light text-base md:text-lg leading-relaxed mb-10 tracking-wide">
+                Khám phá kho tàng tơ tằm nguyên bản, Cotton Ai Cập Giza 45 và sợi dệt thủ công độc bản được chế tác dành riêng cho các nhà mốt Haute Couture thế giới.
+            </p>
+
+            <div class="scroll-reveal flex flex-col sm:flex-row items-center gap-5">
+                <a href="#fabrics" class="cursor-target magnetic-btn group relative px-9 py-4 rounded-full bg-stone-900 dark:bg-gold-500 text-sand-50 dark:text-noir-900 font-medium text-xs uppercase tracking-[0.25em] overflow-hidden shadow-2xl transition-all duration-300 hover:shadow-gold-500/25">
+                    <span class="relative z-10 flex items-center gap-3">
+                        <span>Khám Phá Tuyển Tập</span>
+                        <i class="fa-solid fa-arrow-right-long text-sm transition-transform duration-300 group-hover:translate-x-1.5"></i>
+                    </span>
+                    <span class="absolute inset-0 bg-gold-600 dark:bg-white transform translate-y-full transition-transform duration-500 ease-out group-hover:translate-y-0"></span>
+                </a>
+
+                <a href="#swatch-lab" class="cursor-target magnetic-btn group px-8 py-4 rounded-full glass-card border border-stone-300/80 dark:border-gold-500/30 text-stone-800 dark:text-sand-100 font-medium text-xs uppercase tracking-[0.25em] transition-all duration-300 hover:border-gold-500">
+                    <span class="flex items-center gap-2">
+                        <i class="fa-regular fa-compass text-gold-600 dark:text-gold-400"></i>
+                        <span>Đặt Hộp Mẫu Vải (Swatch Box)</span>
+                    </span>
+                </a>
+            </div>
+
+            <div class="scroll-reveal mt-16 pt-8 border-t border-stone-300/50 dark:border-noir-700/60 grid grid-cols-2 sm:grid-cols-4 gap-8 md:gap-14 text-center">
+                <div>
+                    <div class="font-serif text-3xl md:text-4xl font-semibold text-stone-900 dark:text-gold-300">100%</div>
+                    <div class="text-[10px] uppercase tracking-widest text-stone-500 dark:text-stone-400 mt-1">Tự Nhiên Hữu Cơ</div>
+                </div>
+                <div>
+                    <div class="font-serif text-3xl md:text-4xl font-semibold text-stone-900 dark:text-gold-300">240s/2</div>
+                    <div class="text-[10px] uppercase tracking-widest text-stone-500 dark:text-stone-400 mt-1">Mật Độ Sợi Tối Thượng</div>
+                </div>
+                <div>
+                    <div class="font-serif text-3xl md:text-4xl font-semibold text-stone-900 dark:text-gold-300">60+</div>
+                    <div class="text-[10px] uppercase tracking-widest text-stone-500 dark:text-stone-400 mt-1">Năm Di Sản Nghề</div>
+                </div>
+                <div>
+                    <div class="font-serif text-3xl md:text-4xl font-semibold text-stone-900 dark:text-gold-300">35+</div>
+                    <div class="text-[10px] uppercase tracking-widest text-stone-500 dark:text-stone-400 mt-1">Quốc Gia Xuất Khẩu</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-stone-400 dark:text-stone-500">
+            <span class="text-[9px] uppercase tracking-[0.3em]">Cuộn Xuống</span>
+            <div class="w-4 h-7 rounded-full border border-stone-400/50 dark:border-stone-600 flex justify-center pt-1">
+                <span class="w-1 h-1.5 rounded-full bg-gold-500 animate-bounce"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== INFINITE MARQUEE SECTION ==================== -->
+    <section class="py-6 border-y border-stone-200/80 dark:border-noir-700 bg-sand-100/60 dark:bg-noir-800/60 overflow-hidden select-none">
+        <div class="marquee-wrapper flex overflow-hidden whitespace-nowrap">
+            <div class="animate-marquee flex items-center space-x-12 shrink-0 text-stone-800 dark:text-sand-100">
+                <span class="flex items-center gap-4 text-xs md:text-sm font-serif tracking-[0.25em] uppercase">
+                    <span>Lụa Tơ Tằm Bảo Lộc</span>
+                    <i class="fa-solid fa-asterisk text-gold-500 text-[10px]"></i>
+                </span>
+                <span class="flex items-center gap-4 text-xs md:text-sm font-serif tracking-[0.25em] uppercase">
+                    <span>Egyptian Giza Cotton 45</span>
+                    <i class="fa-solid fa-asterisk text-gold-500 text-[10px]"></i>
+                </span>
+                <span class="flex items-center gap-4 text-xs md:text-sm font-serif tracking-[0.25em] uppercase">
+                    <span>Vải Lanh Normandie Pure Linen</span>
+                    <i class="fa-solid fa-asterisk text-gold-500 text-[10px]"></i>
+                </span>
+                <span class="flex items-center gap-4 text-xs md:text-sm font-serif tracking-[0.25em] uppercase">
+                    <span>Nhung Lụa Hoàng Gia Lyon</span>
+                    <i class="fa-solid fa-asterisk text-gold-500 text-[10px]"></i>
+                </span>
+                <span class="flex items-center gap-4 text-xs md:text-sm font-serif tracking-[0.25em] uppercase">
+                    <span>Cashmere Double-Face Nội Mông</span>
+                    <i class="fa-solid fa-asterisk text-gold-500 text-[10px]"></i>
+                </span>
+                <span class="flex items-center gap-4 text-xs md:text-sm font-serif tracking-[0.25em] uppercase">
+                    <span>Gấm Dát Chỉ Vàng Brocade</span>
+                    <i class="fa-solid fa-asterisk text-gold-500 text-[10px]"></i>
+                </span>
+            </div>
+            <div class="animate-marquee flex items-center space-x-12 shrink-0 text-stone-800 dark:text-sand-100 ml-12" aria-hidden="true">
+                <span class="flex items-center gap-4 text-xs md:text-sm font-serif tracking-[0.25em] uppercase">
+                    <span>Lụa Tơ Tằm Bảo Lộc</span>
+                    <i class="fa-solid fa-asterisk text-gold-500 text-[10px]"></i>
+                </span>
+                <span class="flex items-center gap-4 text-xs md:text-sm font-serif tracking-[0.25em] uppercase">
+                    <span>Egyptian Giza Cotton 45</span>
+                    <i class="fa-solid fa-asterisk text-gold-500 text-[10px]"></i>
+                </span>
+                <span class="flex items-center gap-4 text-xs md:text-sm font-serif tracking-[0.25em] uppercase">
+                    <span>Vải Lanh Normandie Pure Linen</span>
+                    <i class="fa-solid fa-asterisk text-gold-500 text-[10px]"></i>
+                </span>
+                <span class="flex items-center gap-4 text-xs md:text-sm font-serif tracking-[0.25em] uppercase">
+                    <span>Nhung Lụa Hoàng Gia Lyon</span>
+                    <i class="fa-solid fa-asterisk text-gold-500 text-[10px]"></i>
+                </span>
+                <span class="flex items-center gap-4 text-xs md:text-sm font-serif tracking-[0.25em] uppercase">
+                    <span>Cashmere Double-Face Nội Mông</span>
+                    <i class="fa-solid fa-asterisk text-gold-500 text-[10px]"></i>
+                </span>
+                <span class="flex items-center gap-4 text-xs md:text-sm font-serif tracking-[0.25em] uppercase">
+                    <span>Gấm Dát Chỉ Vàng Brocade</span>
+                    <i class="fa-solid fa-asterisk text-gold-500 text-[10px]"></i>
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         REACT ROOT MOUNT CONTAINER: FEATURED FABRICS & PRODUCT POPUP MODAL
+         ========================================================================= -->
+    <div id="react-fabrics-app"></div>
+
+    <!-- ==================== PARALLAX BANNER (Craftsmanship / Di Sản Thủ Công) ==================== -->
+    <section id="craftsmanship" class="relative w-full py-36 overflow-hidden parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1548036328-c9fa89d128fa?q=80&w=2000&auto=format&fit=crop');">
+        <div class="absolute inset-0 bg-stone-950/70 backdrop-blur-[3px]"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-noir-900 via-transparent to-noir-900/80"></div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-6 text-center text-white">
+            <span class="scroll-reveal text-xs uppercase tracking-[0.35em] text-gold-400 font-medium block mb-4">
+                The Heritage Of Weaving Art
+            </span>
+            <h2 class="scroll-reveal font-serif text-3xl sm:text-5xl md:text-6xl font-normal leading-tight mb-8">
+                Từng Nhịp Thoi Đưa Là <br class="hidden sm:inline"/>
+                <span class="italic text-gold-300 font-light">Một Tác Phẩm Điêu Khắc Vô Hình</span>
+            </h2>
+            <p class="scroll-reveal max-w-2xl mx-auto text-stone-300 font-light text-sm sm:text-base leading-relaxed mb-14">
+                Tại Maison de Soie, mỗi mét vải phải trải qua hơn 40 công đoạn nghiêm ngặt: từ tuyển chọn kén tằm chín đều, kỹ thuật dệt khung thoi cổ bảo tồn độ xốp tự nhiên, đến phương pháp nhuộm chiết xuất từ thảo mộc thiên nhiên.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+                <div class="scroll-reveal glass-card p-6 rounded-2xl border-white/10 dark:border-gold-500/20 hover:-translate-y-2 transition-transform duration-500">
+                    <span class="font-serif text-3xl font-light text-gold-400 block mb-2">01</span>
+                    <h3 class="font-serif text-lg font-semibold text-white mb-2">Tuyển Chọn Kén</h3>
+                    <p class="text-black text-xs font-light leading-relaxed">Chỉ 8% kén tằm đạt tiêu chuẩn cấp độ AAA được đưa vào quy trình se sợi đơn.</p>
+                </div>
+                <div class="scroll-reveal glass-card p-6 rounded-2xl border-white/10 dark:border-gold-500/20 hover:-translate-y-2 transition-transform duration-500" style="transition-delay: 150ms;">
+                    <span class="font-serif text-3xl font-light text-gold-400 block mb-2">02</span>
+                    <h3 class="font-serif text-lg font-semibold text-white mb-2">Dệt Thoi Truyền Thống</h3>
+                    <p class="text-black text-xs font-light leading-relaxed">Khung dệt thoi tốc độ chậm giữ trọn vẹn kết cấu xốp và độ thở của từng sớ vải.</p>
+                </div>
+                <div class="scroll-reveal glass-card p-6 rounded-2xl border-white/10 dark:border-gold-500/20 hover:-translate-y-2 transition-transform duration-500" style="transition-delay: 300ms;">
+                    <span class="font-serif text-3xl font-light text-gold-400 block mb-2">03</span>
+                    <h3 class="font-serif text-lg font-semibold text-white mb-2">Nhuộm Thực Vật Tự Nhiên</h3>
+                    <p class="text-black text-xs font-light leading-relaxed">Sử dụng lá chàm, vỏ cây và củ nâu tạo nên chiều sâu gam màu vĩnh cửu theo thời gian.</p>
+                </div>
+                <div class="scroll-reveal glass-card p-6 rounded-2xl border-white/10 dark:border-gold-500/20 hover:-translate-y-2 transition-transform duration-500" style="transition-delay: 450ms;">
+                    <span class="font-serif text-3xl font-light text-gold-400 block mb-2">04</span>
+                    <h3 class="font-serif text-lg font-semibold text-white mb-2">Kiểm Định Bằng Kính Phóng</h3>
+                    <p class="text-black text-xs font-light leading-relaxed">Nghệ nhân soi kiểm tra từng milimet vuông trước khi đóng dấu ấn sáp xuất xưởng.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== INTERACTIVE SWATCH LAB ==================== -->
+    <section id="swatch-lab" class="py-28 px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="glass-card rounded-3xl p-8 md:p-14 border border-gold-500/20">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7 space-y-6">
+                    <span class="text-[11px] uppercase tracking-[0.3em] font-semibold text-gold-600 dark:text-gold-400 block">
+                        Interactive Texture Studio
+                    </span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-normal text-stone-900 dark:text-stone-50">
+                        Cảm Nhận Từng Thớ Dệt <br class="hidden sm:inline"/>
+                        <span class="italic font-light text-gold-600 dark:text-gold-400">Dưới Lăng Kính Độ Phân Giải Cao</span>
+                    </h2>
+                    <p class="text-stone-600 dark:text-stone-300 text-sm leading-relaxed">
+                        Nhấp chọn chất liệu để xem chi tiết bề mặt dệt phản xạ ánh sáng tự nhiên. Bạn có thể yêu cầu gửi mẫu vải tận nơi trước khi tiến hành may đo.
+                    </p>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                        <button class="swatch-picker-btn active p-3 rounded-xl border-2 border-gold-500 bg-sand-100 dark:bg-noir-800 text-left transition-all cursor-target"
+                                data-image="https://images.unsplash.com/photo-1528458876861-544fd1761a91?q=80&w=1200"
+                                data-title="Lụa Tơ Tằm Bảo Lộc (Champagne Ivory)"
+                                data-specs="19 Momme • 100% Tơ Tự Nhiên • Độ Rũ: 9.8/10">
+                            <div class="w-full h-12 rounded-lg bg-[#FAF0E6] mb-2 shadow-inner border border-stone-200"></div>
+                            <div class="text-[11px] font-semibold text-stone-900 dark:text-sand-50">Lụa Tơ Tằm</div>
+                            <div class="text-[9px] text-stone-400">Champagne Ivory</div>
+                        </button>
+
+                        <button class="swatch-picker-btn p-3 rounded-xl border border-stone-300/80 dark:border-noir-700 bg-sand-100 dark:bg-noir-800 text-left transition-all cursor-target"
+                                data-image="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=1200"
+                                data-title="Nhung Lụa Dạ Vũ (Midnight Emerald)"
+                                data-specs="380 GSM • Lớp Lông Tuyết Mịn • Phản Quang Ánh Tối">
+                            <div class="w-full h-12 rounded-lg bg-[#0F281E] mb-2 shadow-inner border border-stone-700"></div>
+                            <div class="text-[11px] font-semibold text-stone-900 dark:text-sand-50">Nhung Lụa</div>
+                            <div class="text-[9px] text-stone-400">Midnight Emerald</div>
+                        </button>
+
+                        <button class="swatch-picker-btn p-3 rounded-xl border border-stone-300/80 dark:border-noir-700 bg-sand-100 dark:bg-noir-800 text-left transition-all cursor-target"
+                                data-image="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=1200"
+                                data-title="Vải Lanh Normandie (Raw Natural Sand)"
+                                data-specs="220 GSM • Sợi Lanh Mộc Không Tẩy • Cảm Giác Mát Lạnh">
+                            <div class="w-full h-12 rounded-lg bg-[#D3C4A5] mb-2 shadow-inner border border-stone-300"></div>
+                            <div class="text-[11px] font-semibold text-stone-900 dark:text-sand-50">Linen Mộc</div>
+                            <div class="text-[9px] text-stone-400">Natural Sand</div>
+                        </button>
+
+                        <button class="swatch-picker-btn p-3 rounded-xl border border-stone-300/80 dark:border-noir-700 bg-sand-100 dark:bg-noir-800 text-left transition-all cursor-target"
+                                data-image="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1200"
+                                data-title="Gấm Kim Tuyến Hoàng Gia (Royal Obsidian Gold)"
+                                data-specs="Jacquard 3D • Sợi Chỉ Dát Vàng Ý • Cứng Phom Dạ Tiệc">
+                            <div class="w-full h-12 rounded-lg bg-[#2B231D] mb-2 shadow-inner border border-gold-800"></div>
+                            <div class="text-[11px] font-semibold text-stone-900 dark:text-sand-50">Gấm Dát Vàng</div>
+                            <div class="text-[9px] text-stone-400">Obsidian Gold</div>
+                        </button>
+                    </div>
+
+                    <div class="pt-4 flex flex-col sm:flex-row gap-4">
+                        <button class="cursor-target magnetic-btn px-6 py-3.5 rounded-full bg-gold-600 dark:bg-gold-500 text-white dark:text-noir-900 text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-box-open"></i>
+                            <span>Gửi Hộp Mẫu Tận Nhà (Miễn Phí)</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5">
+                    <div class="relative w-full h-[400px] sm:h-[480px] rounded-2xl overflow-hidden shadow-2xl border border-stone-200 dark:border-noir-700 group">
+                        <img id="swatch-stage-image" 
+                             src="https://images.unsplash.com/photo-1528458876861-544fd1761a91?q=80&w=1200" 
+                             alt="Fabric texture zoom" 
+                             class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110">
+                        
+                        <div class="absolute bottom-4 left-4 right-4 glass-card p-4 rounded-xl border border-white/40 dark:border-noir-700">
+                            <h4 id="swatch-stage-title" class="font-serif text-lg font-semibold text-stone-900 dark:text-sand-50">Lụa Tơ Tằm Bảo Lộc (Champagne Ivory)</h4>
+                            <p id="swatch-stage-specs" class="text-xs text-gold-600 dark:text-gold-400 font-medium mt-1">19 Momme • 100% Tơ Tự Nhiên • Độ Rũ: 9.8/10</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer id="contact" class="border-t border-stone-200/80 dark:border-noir-800 bg-sand-100/70 dark:bg-noir-900 pt-20 pb-12 px-6 md:px-12 relative overflow-hidden">
+        <div class="absolute bottom-0 right-1/4 w-80 h-80 bg-gold-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-stone-200 dark:border-noir-800">
+                <div class="lg:col-span-4 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full border border-gold-500/40 flex items-center justify-center">
+                            <span class="font-serif italic font-bold text-gold-600 text-sm">M</span>
+                        </div>
+                        <span class="font-serif text-2xl font-semibold tracking-widest uppercase text-stone-900 dark:text-sand-50">
+                            Maison de Soie
+                        </span>
+                    </div>
+                    <p class="text-xs text-stone-500 dark:text-stone-400 leading-relaxed font-light pr-4">
+                        Nhà cung cấp vải thời trang cao cấp hàng đầu cho các nhà mốt may đo Bespoke & Haute Couture tại Việt Nam và Đông Nam Á từ năm 1984.
+                    </p>
+                    <div class="flex space-x-3 pt-2">
+                        <a href="#" class="cursor-target w-9 h-9 rounded-full glass-card flex items-center justify-center text-stone-600 dark:text-sand-100 hover:text-gold-500 hover:border-gold-500 transition-all text-xs">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="#" class="cursor-target w-9 h-9 rounded-full glass-card flex items-center justify-center text-stone-600 dark:text-sand-100 hover:text-gold-500 hover:border-gold-500 transition-all text-xs">
+                            <i class="fa-brands fa-pinterest-p"></i>
+                        </a>
+                        <a href="#" class="cursor-target w-9 h-9 rounded-full glass-card flex items-center justify-center text-stone-600 dark:text-sand-100 hover:text-gold-500 hover:border-gold-500 transition-all text-xs">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-2 space-y-3">
+                    <h4 class="text-xs uppercase tracking-[0.25em] font-semibold text-stone-900 dark:text-sand-100">Tuyển Tập</h4>
+                    <ul class="space-y-2 text-xs text-stone-500 dark:text-stone-400">
+                        <li><a href="#" class="hover:text-gold-500 transition-colors">Lụa Tơ Tằm Tự Nhiên</a></li>
+                        <li><a href="#" class="hover:text-gold-500 transition-colors">Cotton Ai Cập Giza</a></li>
+                        <li><a href="#" class="hover:text-gold-500 transition-colors">Vải Lanh Pure Linen</a></li>
+                        <li><a href="#" class="hover:text-gold-500 transition-colors">Nhung Lụa Dạ Tiệc</a></li>
+                        <li><a href="#" class="hover:text-gold-500 transition-colors">Gấm Thêu Jacquard</a></li>
+                    </ul>
+                </div>
+
+                <div class="lg:col-span-2 space-y-3">
+                    <h4 class="text-xs uppercase tracking-[0.25em] font-semibold text-stone-900 dark:text-sand-100">Atelier</h4>
+                    <ul class="space-y-2 text-xs text-stone-500 dark:text-stone-400">
+                        <li><span class="block text-stone-700 dark:text-stone-300 font-medium">Flagship Saigon:</span> 88 Đồng Khởi, Quận 1</li>
+                        <li><span class="block text-stone-700 dark:text-stone-300 font-medium">Hanoi Atelier:</span> 12 Tràng Tiền, Hoàn Kiếm</li>
+                        <li><span class="block text-stone-700 dark:text-stone-300 font-medium">Hotline VIP:</span> (+84) 28 3822 9999</li>
+                    </ul>
+                </div>
+
+                <div class="lg:col-span-4 space-y-4">
+                    <h4 class="text-xs uppercase tracking-[0.25em] font-semibold text-stone-900 dark:text-sand-100">Đăng Ký Nhận Thư Tin</h4>
+                    <p class="text-xs text-stone-500 dark:text-stone-400 leading-relaxed">
+                        Đăng ký để nhận catalogue bộ sưu tập mới theo mùa và thông báo các đợt cập bến vải dệt thủ công độc bản.
+                    </p>
+                    
+                    <form id="newsletter-form" class="space-y-3">
+                        <div class="relative group">
+                            <input type="email" 
+                                   required
+                                   placeholder="Nhập email của bạn..." 
+                                   class="w-full px-4 py-3 rounded-xl glass-card text-xs text-stone-800 dark:text-sand-100 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-gold-500/50 border border-stone-300 dark:border-noir-700 transition-all duration-300">
+                            <button type="submit" class="cursor-target absolute right-1.5 top-1.5 bottom-1.5 px-4 rounded-lg bg-stone-900 dark:bg-gold-500 text-sand-50 dark:text-noir-900 text-xs font-medium hover:opacity-90 transition-opacity">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                        <p id="newsletter-msg" class="text-[10px] text-gold-600 dark:text-gold-400 hidden">Cảm ơn bạn đã đăng ký! Maison de Soie sẽ gửi thư chào đón sớm nhất.</p>
+                    </form>
+                </div>
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-stone-400 gap-4">
+                <p>© 2026 Maison de Soie. Mọi quyền được bảo lưu. Nghệ thuật dệt may thủ công.</p>
+                <div class="flex items-center space-x-6">
+                    <a href="#" class="hover:text-gold-500 transition-colors">Chính Sách Bảo Mật</a>
+                    <a href="#" class="hover:text-gold-500 transition-colors">Điều Khoản Dịch Vụ</a>
+                    <a href="#hero" class="cursor-target magnetic-btn flex items-center gap-1.5 text-stone-700 dark:text-gold-400 hover:text-gold-600">
+                        <span>Lên Đầu Trang</span>
+                        <i class="fa-solid fa-arrow-up text-xs"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== SHOPPING CART DRAWER ==================== -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 pointer-events-none transition-all duration-500">
+        <div id="cart-backdrop" class="absolute inset-0 bg-stone-900/40 backdrop-blur-sm opacity-0 transition-opacity duration-500"></div>
+
+        <div id="cart-panel" class="absolute top-0 right-0 w-full max-w-md h-full bg-sand-50 dark:bg-noir-900 shadow-2xl border-l border-stone-200 dark:border-noir-700 transform translate-x-full transition-transform duration-500 ease-out flex flex-col p-6 sm:p-8">
+            <div class="flex items-center justify-between pb-6 border-b border-stone-200 dark:border-noir-700">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-bag-shopping text-gold-600"></i>
+                    <h3 class="font-serif text-2xl font-semibold text-stone-900 dark:text-sand-50">Hộp Mẫu Vải Của Bạn</h3>
+                </div>
+                <button id="cart-close" class="cursor-target text-stone-400 hover:text-stone-800 dark:hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div id="cart-items" class="flex-1 overflow-y-auto py-6 space-y-4">
+                <div class="flex items-center justify-between p-3 rounded-xl glass-card">
+                    <div class="flex items-center gap-3">
+                        <img src="https://images.unsplash.com/photo-1528458876861-544fd1761a91?q=80&w=200" alt="Silk swatch" class="w-14 h-14 object-cover rounded-lg">
+                        <div>
+                            <h4 class="text-xs font-semibold text-stone-800 dark:text-stone-200">Lụa Tơ Tằm Bảo Lộc</h4>
+                            <span class="text-[10px] text-stone-400">Khổ: 140cm • 1 mét</span>
+                            <div class="text-xs font-serif font-medium text-gold-600 dark:text-gold-400 mt-1">450.000₫</div>
+                        </div>
+                    </div>
+                    <button class="remove-item-btn text-stone-400 hover:text-red-500 text-xs p-2">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+                <div class="flex items-center justify-between p-3 rounded-xl glass-card">
+                    <div class="flex items-center gap-3">
+                        <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=200" alt="Cotton swatch" class="w-14 h-14 object-cover rounded-lg">
+                        <div>
+                            <h4 class="text-xs font-semibold text-stone-800 dark:text-stone-200">Cotton Ai Cập Giza 45</h4>
+                            <span class="text-[10px] text-stone-400">Khổ: 160cm • 1 mét</span>
+                            <div class="text-xs font-serif font-medium text-gold-600 dark:text-gold-400 mt-1">145.000₫</div>
+                        </div>
+                    </div>
+                    <button class="remove-item-btn text-stone-400 hover:text-red-500 text-xs p-2">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-stone-200 dark:border-noir-700 space-y-4">
+                <div class="flex justify-between items-baseline">
+                    <span class="text-xs text-stone-500 uppercase tracking-wider">Tạm Tính Mẫu Thử:</span>
+                    <span id="cart-total" class="font-serif text-2xl font-semibold text-gold-700 dark:text-gold-300">595.000₫</span>
+                </div>
+                <button class="cursor-target w-full py-4 rounded-full bg-stone-900 dark:bg-gold-500 text-sand-50 dark:text-noir-900 font-semibold text-xs uppercase tracking-[0.2em] shadow-xl hover:opacity-95 transition-all">
+                    Tiến Hành Đặt Mẫu (Bespoke Checkout)
+                </button>
+                <p class="text-[10px] text-center text-stone-400">Giao hàng mẫu vải bảo hiểm cao cấp trong vòng 24h</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================================
+         FLOATING ACTION BUTTONS: CONTACT & ZALO (VỊ TRÍ PHÍA TRÊN LOGO NETLIFY)
+         ========================================================================= -->
+    <div class="fixed bottom-24 right-5 sm:right-7 z-40 flex flex-col items-end gap-3.5 select-none">
+        
+        <!-- NÚT 1: CONTACT PHONE (KÈM BONG BÓNG HIỂN THỊ SỐ ĐIỆN THOẠI KHI RÊ CHUỘT) -->
+        <div class="relative group flex items-center justify-end">
+            <!-- Bong bóng nhỏ hiển thị số điện thoại (Tooltip Bubble) -->
+            <div class="absolute right-full mr-3.5 top-1/2 -translate-y-1/2 opacity-0 translate-x-3 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 group-hover:pointer-events-auto transition-all duration-300 ease-out z-50">
+                <div class="glass-card px-4 py-2.5 rounded-2xl border border-gold-500/40 shadow-2xl flex items-center gap-3 whitespace-nowrap bg-sand-50/95 dark:bg-noir-900/95">
+                    <div class="w-8 h-8 rounded-full bg-gold-500/20 text-gold-600 dark:text-gold-400 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-phone text-xs animate-bounce"></i>
+                    </div>
+                    <div>
+                        <span class="block text-[9px] uppercase tracking-widest font-semibold text-gold-700 dark:text-gold-400 -mb-0.5">
+                            Hotline Tư Vấn VIP
+                        </span>
+                        <a href="tel:0943966350" class="text-sm sm:text-base font-bold text-stone-900 dark:text-sand-50 hover:text-gold-600 dark:hover:text-gold-400 transition-colors">
+                            (+84) 943 966 350
+                        </a>
+                    </div>
+                </div>
+                <!-- Mũi tên tam giác hướng vào nút -->
+                <div class="absolute right-[-5px] top-1/2 -translate-y-1/2 w-2.5 h-2.5 rotate-45 bg-sand-50 dark:bg-noir-900 border-r border-t border-gold-500/40"></div>
+            </div>
+
+            <!-- Nút tròn Contact -->
+            <a href="tel:0943966350" 
+               aria-label="Gọi điện thoại liên hệ"
+               class="cursor-target relative w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-stone-900 to-stone-800 dark:from-gold-600 dark:to-gold-400 text-sand-50 dark:text-noir-900 flex items-center justify-center shadow-2xl border border-gold-500/40 hover:scale-110 active:scale-95 transition-all duration-300 group">
+                <!-- Vòng sóng phát sáng lan tỏa -->
+                <span class="absolute inset-0 rounded-full bg-gold-500/30 animate-ping pointer-events-none"></span>
+                <i class="fa-solid fa-phone-volume text-base sm:text-lg text-gold-400 dark:text-noir-900 group-hover:rotate-12 transition-transform"></i>
+            </a>
+        </div>
+
+        <!-- NÚT 2: ZALO (CHUYỂN HƯỚNG TỚI LINK ZALO CÁ NHÂN HOẶC OA) -->
+        <div class="relative group flex items-center justify-end">
+            <!-- Bong bóng nhỏ chú thích Zalo khi rê chuột -->
+            <div class="absolute right-full mr-3.5 top-1/2 -translate-y-1/2 opacity-0 translate-x-3 pointer-events-none group-hover:opacity-100 group-hover:translate-x-0 group-hover:pointer-events-auto transition-all duration-300 ease-out z-50">
+                <div class="glass-card px-4 py-2 rounded-2xl border border-blue-500/30 shadow-2xl flex items-center gap-2.5 whitespace-nowrap bg-sand-50/95 dark:bg-noir-900/95">
+                    <span class="w-2 h-2 rounded-full bg-[#0068FF] animate-pulse"></span>
+                    <span class="text-xs font-semibold text-stone-800 dark:text-sand-100">
+                        Chat Zalo tư vấn vải ngay
+                    </span>
+                </div>
+                <div class="absolute right-[-5px] top-1/2 -translate-y-1/2 w-2.5 h-2.5 rotate-45 bg-sand-50 dark:bg-noir-900 border-r border-t border-blue-500/30"></div>
+            </div>
+
+            <!-- Nút tròn Zalo -->
+            <a href="https://zalo.me/0943966350" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               aria-label="Liên hệ Zalo cá nhân"
+               class="cursor-target w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#0068FF] text-white flex items-center justify-center shadow-[0_8px_25px_rgba(0,104,255,0.4)] hover:shadow-[0_10px_30px_rgba(0,104,255,0.6)] hover:scale-110 active:scale-95 transition-all duration-300 border border-white/30">
+                <!-- Logo Zalo SVG chuẩn sắc nét -->
+                <img src="https://img.icons8.com/?size=100&id=0m71tmRjlxEe&format=png&color=000000" alt="Logo Zalo" class="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
+            </a>
+        </div>
+
+    </div>
+
+    <!-- =========================================================================
+         REACT APPLICATION (PRODUCTS CATALOG & INTERACTIVE MAGNIFIER MODAL)
+         ========================================================================= -->
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        const CARE = [
+            null,
+            "Giặt nhẹ bằng tay hoặc chế độ nhẹ, nước lạnh dưới 30°C. Không vắt xoắn mạnh, không dùng chất tẩy. Phơi nơi thoáng mát, tránh nắng gắt. Ủi ở nhiệt độ thấp.",
+            "Giao hàng toàn quốc 2-4 ngày. Miễn phí vận chuyển đơn từ 1.000.000đ, dưới mức này phí 30.000đ. Được kiểm tra hàng trước khi thanh toán, đổi trả trong 7 ngày nếu lỗi do nhà cung cấp."
+        ];
+
+        const productsData = [
+            {
+                id: 1,
+                name: "Lụa Tơ Tằm Bảo Lộc Thượng Hạng",
+                price: 450000,
+                oldPrice: 520000,
+                category: "lua",
+                categoryName: "Lụa Tơ Tằm",
+                tag: "hot",
+                rating: 4.9,
+                reviews: 128,
+                sold: 860,
+                images: [
+                    "https://images.unsplash.com/photo-1528458876861-544fd1761a91?auto=format&fit=crop&w=1200&q=80",
+                    "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80",
+                    "https://images.unsplash.com/photo-1584448281102-9905b4b1a43a?auto=format&fit=crop&w=1200&q=80"
+                ],
+                colors: [
+                    { name: "Đỏ Rượu (Bordeaux)", hex: "#722F37" },
+                    { name: "Vàng Đồng Gân", hex: "#D4AF37" },
+                    { name: "Trắng Ngọc Trai", hex: "#FDF5E6" }
+                ],
+                material: "100% Tơ tằm tự nhiên (Mulberry Silk)",
+                width: "1.5 mét",
+                feature: "Mát mịn, rũ tự nhiên, bóng nhẹ sang trọng",
+                desc: "Được dệt thủ công bởi các nghệ nhân lụa thủ phủ Bảo Lộc. Chất vải tơ tằm nguyên bản vô cùng thân thiện với làn da, có khả năng điều hòa nhiệt độ: giữ ấm vào mùa đông và thoáng mát vào mùa hè. Bề mặt óng ánh tự nhiên, tạo sự quý phái và đẳng cấp tối thượng cho trang phục áo dài truyền thống hay đầm tiệc dạ hội."
+            },
+            {
+                id: 2,
+                name: "Vải Linen Bột Tự Nhiên (Thô Đũi)",
+                price: 180000,
+                oldPrice: 0,
+                category: "linen",
+                categoryName: "Linen / Thô",
+                tag: "",
+                rating: 4.7,
+                reviews: 86,
+                sold: 540,
+                images: [
+                    "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=1200&q=80",
+                    "https://images.unsplash.com/photo-1596443686812-2f45229eebc3?auto=format&fit=crop&w=1200&q=80",
+                    "https://images.unsplash.com/photo-1584879207036-7c05eb73f1d3?auto=format&fit=crop&w=1200&q=80"
+                ],
+                colors: [
+                    { name: "Nâu Be Mộc", hex: "#C19A6B" },
+                    { name: "Xanh Rêu Đậm", hex: "#4A5D23" }
+                ],
+                material: "Sợi lanh (Linen) tự nhiên 100%",
+                width: "1.4 mét",
+                feature: "Thấm hút mồ hôi tốt, lên form cứng cáp",
+                desc: "Dòng linen bột có độ nhăn tự nhiên đặc trưng (nhăn thanh lịch) nhưng mang vẻ đẹp mộc mạc, vintage không thể trộn lẫn. Rất thích hợp để may váy chữ A, áo sơ mi dáng suông rộng, quần tây ống suông hoặc trang phục phong cách Minimalist phóng khoáng."
+            },
+            {
+                id: 3,
+                name: "Cotton Kháng Khuẩn Hàn Quốc",
+                price: 145000,
+                oldPrice: 165000,
+                category: "cotton",
+                categoryName: "Cotton Cao Cấp",
+                tag: "new",
+                rating: 4.8,
+                reviews: 214,
+                sold: 1320,
+                images: [
+                    "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=1200&q=80",
+                    "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=1200&q=80"
+                ],
+                colors: [
+                    { name: "Trắng Tinh Khiết", hex: "#FFFFFF" },
+                    { name: "Hồng Pastel", hex: "#FFD1DC" },
+                    { name: "Xanh Baby", hex: "#89CFF0" }
+                ],
+                material: "Cotton sợi dài (Long-staple cotton)",
+                width: "1.6 mét",
+                feature: "Co giãn 2 chiều, chống xù lông, kháng khuẩn",
+                desc: "Sản xuất theo dây chuyền công nghệ Hàn Quốc với lớp xử lý bề mặt giúp vải đanh mịn, hạn chế nhăn và ngăn vi khuẩn gây mùi. Lựa chọn tuyệt vời cho thời trang trẻ em, áo phông cao cấp, sơ mi công sở hoặc chăn ga gối đệm."
+            },
+            {
+                id: 4,
+                name: "Lụa Satin Tuyết Dày Dặn",
+                price: 290000,
+                oldPrice: 360000,
+                category: "lua",
+                categoryName: "Lụa Tơ Tằm",
+                tag: "sale",
+                rating: 4.6,
+                reviews: 97,
+                sold: 728,
+                images: [
+                    "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=1200&q=80",
+                    "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=1200&q=80"
+                ],
+                colors: [
+                    { name: "Đen Tuyền Tuyệt", hex: "#111111" },
+                    { name: "Đỏ Đun", hex: "#800000" }
+                ],
+                material: "Lụa Poly-Satin cao cấp",
+                width: "1.5 mét",
+                feature: "Độ bóng mượt cao, ít nhăn, dễ là ủi",
+                desc: "Phiên bản lụa satin công nghiệp cải tiến với độ dày dặn vượt trội, khắc phục nhược điểm dễ xước của satin thông thường. Bề mặt trơn nhẵn phản sáng nhẹ nhàng, cực kỳ phù hợp cho các thiết kế đầm dạ tiệc, áo blazer mềm mại."
+            },
+            {
+                id: 5,
+                name: "Cotton Muslin Mềm Mịn 4 Lớp",
+                price: 120000,
+                oldPrice: 0,
+                category: "cotton",
+                categoryName: "Cotton Cao Cấp",
+                tag: "new",
+                rating: 4.9,
+                reviews: 156,
+                sold: 980,
+                images: [
+                    "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=1200&q=80",
+                    "https://images.unsplash.com/photo-1605001007255-6c70a8d5c43d?auto=format&fit=crop&w=1200&q=80"
+                ],
+                colors: [
+                    { name: "Kem Sữa", hex: "#F5EBD0" },
+                    { name: "Vàng Bơ", hex: "#E9D8A6" },
+                    { name: "Xám Khói", hex: "#888888" }
+                ],
+                material: "100% Cotton muslin hữu cơ",
+                width: "1.6 mét",
+                feature: "Siêu mềm, thoáng khí, an toàn cho da nhạy cảm",
+                desc: "Muslin nhiều lớp mềm như mây, càng giặt càng mềm. Phù hợp may khăn xô, yếm, chăn, đồ sơ sinh và trang phục mặc nhà thoải mái tuyệt đối cho mùa hè oi bức."
+            },
+            {
+                id: 6,
+                name: "Linen Pha Lụa Cao Cấp",
+                price: 320000,
+                oldPrice: 380000,
+                category: "linen",
+                categoryName: "Linen / Thô",
+                tag: "hot",
+                rating: 4.8,
+                reviews: 81,
+                sold: 310,
+                images: [
+                    "https://images.unsplash.com/photo-1596443686812-2f45229eebc3?auto=format&fit=crop&w=1200&q=80",
+                    "https://images.unsplash.com/photo-1584879207036-7c05eb73f1d3?auto=format&fit=crop&w=1200&q=80"
+                ],
+                colors: [
+                    { name: "Ghi Sáng", hex: "#CFC8BD" },
+                    { name: "Xanh Ngọc Nhạt", hex: "#A8C7C3" },
+                    { name: "Hồng Đất", hex: "#D9AB9A" }
+                ],
+                material: "55% Linen, 45% Tơ tằm",
+                width: "1.45 mét",
+                feature: "Vừa hơn linen thường, có độ bóng nhẹ",
+                desc: "Sự kết hợp giữa độ thoáng của linen và độ mượt của tơ tằm. Ít nhăn hơn linen thuần, rủ nhẹ nhàng, rất hợp cho đầm công sở, áo dài cách tân và áo kiểu thanh lịch sang trọng."
+            }
+        ];
+
+        const formatMoney = (amount) => {
+            return new Intl.NumberFormat('vi-VN').format(amount) + '₫';
+        };
+
+        /* COMPONENT: KÍNH LÚP SOI THỚ VẢI */
+        const FabricMagnifier = ({ imageSrc, alt }) => {
+            const [zoomActive, setZoomActive] = useState(false);
+            const [pos, setPos] = useState({ x: 50, y: 50 });
+            const imgRef = useRef(null);
+
+            const handleMouseMove = (e) => {
+                if (!imgRef.current) return;
+                const rect = imgRef.current.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                setPos({
+                    x: Math.max(0, Math.min(100, x)),
+                    y: Math.max(0, Math.min(100, y))
+                });
+            };
+
+            return (
+                <div 
+                    ref={imgRef}
+                    onMouseEnter={() => setZoomActive(true)}
+                    onMouseLeave={() => setZoomActive(false)}
+                    onMouseMove={handleMouseMove}
+                    className="relative w-full h-[360px] sm:h-[440px] rounded-2xl overflow-hidden bg-stone-100 dark:bg-noir-800 cursor-crosshair select-none border border-stone-200/80 dark:border-noir-700 shadow-inner group"
+                >
+                    <img 
+                        src={imageSrc} 
+                        alt={alt}
+                        className="w-full h-full object-cover transition-transform duration-150 ease-out will-change-transform"
+                        style={{
+                            transformOrigin: `${pos.x}% ${pos.y}%`,
+                            transform: zoomActive ? 'scale(2.4)' : 'scale(1)'
+                        }}
+                    />
+
+                    <div className="absolute top-4 left-4 glass-card px-3 py-1.5 rounded-full flex items-center gap-2 pointer-events-none transition-opacity duration-300">
+                        <i className={`fa-solid fa-magnifying-glass text-xs ${zoomActive ? 'text-gold-500 animate-pulse' : 'text-stone-500'}`}></i>
+                        <span className="text-[10px] uppercase tracking-widest font-medium text-stone-700 dark:text-sand-100">
+                            {zoomActive ? 'Đang soi sợi vải (x2.4)' : 'Rê chuột soi chi tiết vải'}
+                        </span>
+                    </div>
+
+                    {zoomActive && (
+                        <div 
+                            className="absolute pointer-events-none rounded-full border-2 border-gold-500/80 shadow-[0_0_15px_rgba(197,158,63,0.4)]"
+                            style={{
+                                width: '100px',
+                                height: '100px',
+                                left: `${pos.x}%`,
+                                top: `${pos.y}%`,
+                                transform: 'translate(-50%, -50%)',
+                                backgroundColor: 'rgba(197, 158, 63, 0.08)'
+                            }}
+                        />
+                    )}
+                </div>
+            );
+        };
+
+        /* COMPONENT: POPUP CHI TIẾT SẢN PHẨM */
+        const ProductDetailModal = ({ product, onClose, onAddToCart }) => {
+            if (!product) return null;
+
+            const [selectedImage, setSelectedImage] = useState(product.images[0]);
+            const [selectedColor, setSelectedColor] = useState(product.colors[0]);
+            const [meters, setMeters] = useState(1);
+            const [activeTab, setActiveTab] = useState('desc');
+            const [addedNotice, setAddedNotice] = useState(false);
+
+            useEffect(() => {
+                setSelectedImage(product.images[0]);
+                setSelectedColor(product.colors[0]);
+                setMeters(1);
+                setActiveTab('desc');
+
+                document.body.style.overflow = 'hidden';
+                const handleKeyDown = (e) => {
+                    if (e.key === 'Escape') onClose();
+                };
+                window.addEventListener('keydown', handleKeyDown);
+
+                return () => {
+                    document.body.style.overflow = 'auto';
+                    window.removeEventListener('keydown', handleKeyDown);
+                };
+            }, [product]);
+
+            const handleAdd = () => {
+                onAddToCart(product, selectedColor, meters);
+                setAddedNotice(true);
+                setTimeout(() => setAddedNotice(false), 2000);
+            };
+
+            const discountPercent = product.oldPrice > product.price 
+                ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100) 
+                : 0;
+
+            return (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-fade-in">
+                    <div 
+                        className="fixed inset-0 bg-stone-950/70 backdrop-blur-md transition-opacity"
+                        onClick={onClose}
+                    />
+
+                    <div className="relative w-full max-w-5xl bg-sand-50 dark:bg-noir-900 rounded-3xl shadow-2xl border border-stone-200/90 dark:border-noir-700 z-10 overflow-hidden my-auto animate-scale-up max-h-[92vh] flex flex-col">
+                        <button 
+                            onClick={onClose}
+                            className="cursor-target absolute top-4 right-4 z-20 w-10 h-10 rounded-full glass-card flex items-center justify-center text-stone-500 hover:text-stone-900 dark:hover:text-white transition-all shadow-md"
+                            aria-label="Đóng popup"
+                        >
+                            <i className="fa-solid fa-xmark text-lg"></i>
+                        </button>
+
+                        <div className="p-6 sm:p-10 overflow-y-auto flex-1">
+                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                                
+                                <div className="lg:col-span-6 space-y-4">
+                                    <FabricMagnifier imageSrc={selectedImage} alt={product.name} />
+
+                                    <div className="flex items-center gap-3 overflow-x-auto pb-2">
+                                        {product.images.map((img, idx) => (
+                                            <button
+                                                key={idx}
+                                                onClick={() => setSelectedImage(img)}
+                                                className={`cursor-target shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-200 ${
+                                                    selectedImage === img 
+                                                        ? 'border-gold-500 shadow-md scale-105' 
+                                                        : 'border-transparent opacity-60 hover:opacity-100'
+                                                }`}
+                                            >
+                                                <img src={img} alt={`Góc nhìn ${idx + 1}`} className="w-full h-full object-cover" />
+                                            </button>
+                                        ))}
+                                    </div>
+
+                                    <div className="p-4 rounded-xl glass-card border border-gold-500/20 flex items-center gap-3 text-xs text-stone-600 dark:text-stone-300">
+                                        <i className="fa-solid fa-certificate text-gold-600 text-lg"></i>
+                                        <span>Chứng nhận 100% sợi dệt nguyên bản đạt tiêu chuẩn may đo cao cấp Haute Couture.</span>
+                                    </div>
+                                </div>
+
+                                <div className="lg:col-span-6 space-y-6">
+                                    <div className="flex items-center gap-2 flex-wrap">
+                                        <span className="px-3 py-1 rounded-full text-[10px] uppercase font-semibold tracking-widest bg-stone-900 dark:bg-gold-500 text-white dark:text-noir-900">
+                                            {product.categoryName}
+                                        </span>
+                                        {product.tag && (
+                                            <span className="px-3 py-1 rounded-full text-[10px] uppercase font-bold tracking-widest bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-500/30">
+                                                {product.tag === 'hot' ? '🔥 Bán Chạy Nhất' : product.tag === 'new' ? '✨ Mẫu Mới' : '🏷️ Ưu Đãi Đặc Biệt'}
+                                            </span>
+                                        )}
+                                        <div className="flex items-center gap-1.5 text-xs text-amber-500 ml-auto">
+                                            <i className="fa-solid fa-star text-[11px]"></i>
+                                            <span className="font-semibold text-stone-800 dark:text-sand-100">{product.rating}</span>
+                                            <span className="text-stone-400">({product.reviews} đánh giá • Đã bán {product.sold}m)</span>
+                                        </div>
+                                    </div>
+
+                                    <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-stone-900 dark:text-sand-50 leading-tight">
+                                        {product.name}
+                                    </h2>
+
+                                    <div className="flex items-baseline gap-4 py-2 border-y border-stone-200/70 dark:border-noir-700">
+                                        <span className="font-serif text-3xl sm:text-4xl font-bold text-gold-700 dark:text-gold-400">
+                                            {formatMoney(product.price)}
+                                            <span className="text-sm font-sans font-normal text-stone-400 ml-1">/ mét</span>
+                                        </span>
+                                        {product.oldPrice > 0 && (
+                                            <>
+                                                <span className="text-sm text-stone-400 line-through">
+                                                    {formatMoney(product.oldPrice)}
+                                                </span>
+                                                <span className="text-xs px-2 py-0.5 rounded bg-red-100 text-red-600 dark:bg-red-950/60 dark:text-red-400 font-semibold">
+                                                    -{discountPercent}%
+                                                </span>
+                                            </>
+                                        )}
+                                    </div>
+
+                                    <div>
+                                        <div className="flex items-center justify-between mb-3 text-xs">
+                                            <span className="font-semibold uppercase tracking-wider text-stone-700 dark:text-stone-300">
+                                                Màu Sắc Lựa Chọn:
+                                            </span>
+                                            <span className="font-medium text-gold-600 dark:text-gold-400">
+                                                {selectedColor.name}
+                                            </span>
+                                        </div>
+                                        <div className="flex items-center gap-3 flex-wrap">
+                                            {product.colors.map((color, idx) => (
+                                                <button
+                                                    key={idx}
+                                                    onClick={() => setSelectedColor(color)}
+                                                    className={`cursor-target group flex items-center gap-2 px-3 py-2 rounded-xl border transition-all ${
+                                                        selectedColor.name === color.name
+                                                            ? 'border-gold-500 bg-gold-500/10 shadow-sm'
+                                                            : 'border-stone-200 dark:border-noir-700 hover:border-gold-400'
+                                                    }`}
+                                                >
+                                                    <span 
+                                                        className="w-5 h-5 rounded-full border border-stone-300 dark:border-stone-600 shadow-sm"
+                                                        style={{ backgroundColor: color.hex }}
+                                                    />
+                                                    <span className="text-xs text-stone-800 dark:text-sand-100 font-medium">
+                                                        {color.name}
+                                                    </span>
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-center gap-6 pt-2">
+                                        <div>
+                                            <span className="block text-xs uppercase tracking-wider font-semibold text-stone-700 dark:text-stone-300 mb-2">
+                                                Chiều Dài (Mét):
+                                            </span>
+                                            <div className="flex items-center border border-stone-300 dark:border-noir-700 rounded-xl overflow-hidden">
+                                                <button 
+                                                    onClick={() => setMeters(Math.max(1, meters - 1))}
+                                                    className="w-10 h-10 flex items-center justify-center text-stone-600 dark:text-sand-100 hover:bg-stone-200 dark:hover:bg-noir-800 transition-colors"
+                                                >
+                                                    <i className="fa-solid fa-minus text-xs"></i>
+                                                </button>
+                                                <span className="w-12 text-center text-sm font-bold text-stone-900 dark:text-white">
+                                                    {meters}
+                                                </span>
+                                                <button 
+                                                    onClick={() => setMeters(meters + 1)}
+                                                    className="w-10 h-10 flex items-center justify-center text-stone-600 dark:text-sand-100 hover:bg-stone-200 dark:hover:bg-noir-800 transition-colors"
+                                                >
+                                                    <i className="fa-solid fa-plus text-xs"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex-1">
+                                            <span className="block text-xs uppercase tracking-wider font-semibold text-stone-500 mb-1">
+                                                Tạm Tính Chi Phí:
+                                            </span>
+                                            <div className="font-serif text-2xl font-bold text-stone-900 dark:text-sand-50">
+                                                {formatMoney(product.price * meters)}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                                        <button 
+                                            onClick={handleAdd}
+                                            className="cursor-target flex-1 py-4 px-6 rounded-full bg-stone-900 dark:bg-gold-500 text-sand-50 dark:text-noir-900 font-semibold text-xs uppercase tracking-[0.2em] shadow-lg hover:opacity-95 transition-all flex items-center justify-center gap-2"
+                                        >
+                                            <i className="fa-solid fa-bag-shopping"></i>
+                                            <span>{addedNotice ? 'Đã Thêm Vào Giỏ Hàng!' : 'Thêm Vào Giỏ Hàng Mẫu'}</span>
+                                        </button>
+
+                                        <button 
+                                            onClick={handleAdd}
+                                            className="cursor-target py-4 px-6 rounded-full border border-gold-500 text-gold-600 dark:text-gold-400 font-semibold text-xs uppercase tracking-[0.2em] hover:bg-gold-500 hover:text-white dark:hover:text-noir-900 transition-all flex items-center justify-center gap-2"
+                                        >
+                                            <i className="fa-solid fa-bolt"></i>
+                                            <span>Mua Ngay</span>
+                                        </button>
+                                    </div>
+
+                                    <div className="pt-4 border-t border-stone-200 dark:border-noir-700">
+                                        <div className="flex gap-4 border-b border-stone-200/80 dark:border-noir-700 pb-2 text-xs font-semibold uppercase tracking-wider">
+                                            <button 
+                                                onClick={() => setActiveTab('desc')}
+                                                className={`pb-2 transition-colors relative ${activeTab === 'desc' ? 'text-gold-600 dark:text-gold-400' : 'text-stone-400'}`}
+                                            >
+                                                Mô Tả Sản Phẩm
+                                                {activeTab === 'desc' && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gold-500"></span>}
+                                            </button>
+                                            <button 
+                                                onClick={() => setActiveTab('specs')}
+                                                className={`pb-2 transition-colors relative ${activeTab === 'specs' ? 'text-gold-600 dark:text-gold-400' : 'text-stone-400'}`}
+                                            >
+                                                Quy Cách Kỹ Thuật
+                                                {activeTab === 'specs' && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gold-500"></span>}
+                                            </button>
+                                            <button 
+                                                onClick={() => setActiveTab('care')}
+                                                className={`pb-2 transition-colors relative ${activeTab === 'care' ? 'text-gold-600 dark:text-gold-400' : 'text-stone-400'}`}
+                                            >
+                                                Bảo Quản & Vận Chuyển
+                                                {activeTab === 'care' && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gold-500"></span>}
+                                            </button>
+                                        </div>
+
+                                        <div className="py-4 text-xs leading-relaxed text-stone-600 dark:text-stone-300 min-h-[90px]">
+                                            {activeTab === 'desc' && (
+                                                <p className="animate-fade-in">{product.desc}</p>
+                                            )}
+
+                                            {activeTab === 'specs' && (
+                                                <div className="space-y-2 animate-fade-in">
+                                                    <div className="flex justify-between py-1 border-b border-stone-200/60 dark:border-noir-700">
+                                                        <span className="text-stone-400">Chất liệu chính:</span>
+                                                        <span className="font-medium text-stone-800 dark:text-sand-100">{product.material}</span>
+                                                    </div>
+                                                    <div className="flex justify-between py-1 border-b border-stone-200/60 dark:border-noir-700">
+                                                        <span className="text-stone-400">Khổ rộng:</span>
+                                                        <span className="font-medium text-stone-800 dark:text-sand-100">{product.width}</span>
+                                                    </div>
+                                                    <div className="flex justify-between py-1">
+                                                        <span className="text-stone-400">Đặc tính dệt:</span>
+                                                        <span className="font-medium text-stone-800 dark:text-sand-100">{product.feature}</span>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {activeTab === 'care' && (
+                                                <div className="space-y-2 animate-fade-in">
+                                                    <p className="mb-2"><strong>Giặt & Là:</strong> {CARE[1]}</p>
+                                                    <p><strong>Giao hàng:</strong> {CARE[2]}</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            );
+        };
+
+        /* COMPONENT: THẺ SẢN PHẨM TRÊN DANH MỤC */
+        const FabricCard = ({ product, onSelect, onAddToCart }) => {
+            return (
+                <div 
+                    onClick={() => onSelect(product)}
+                    className="tilt-container cursor-target group h-full"
+                >
+                    <div className="tilt-card glass-card rounded-2xl overflow-hidden p-4 relative transition-all duration-300 hover:shadow-2xl flex flex-col h-full">
+                        <div className="relative h-80 sm:h-96 w-full rounded-xl overflow-hidden bg-stone-200 dark:bg-noir-700">
+                            <img 
+                                src={product.images[0]} 
+                                alt={product.name} 
+                                className="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 ease-out"
+                            />
+
+                            <div className="absolute top-4 left-4 glass-card px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-semibold text-stone-800 dark:text-sand-100">
+                                {product.categoryName}
+                            </div>
+
+                            <button 
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    onSelect(product);
+                                }}
+                                className="absolute bottom-4 right-4 glass-card w-10 h-10 rounded-full flex items-center justify-center text-gold-600 dark:text-gold-400 text-sm shadow-md transition-transform duration-300 hover:scale-110"
+                                title="Xem kính lúp chi tiết"
+                            >
+                                <i className="fa-solid fa-magnifying-glass"></i>
+                            </button>
+
+                            <div className="absolute bottom-4 left-4 flex gap-1.5 glass-card px-2 py-1 rounded-full">
+                                {product.colors.map((c, i) => (
+                                    <span 
+                                        key={i} 
+                                        className="w-3.5 h-3.5 rounded-full border border-white/60 shadow-sm"
+                                        style={{ backgroundColor: c.hex }}
+                                        title={c.name}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="tilt-content pt-5 pb-2 px-2">
+                            <div className="flex justify-between items-baseline mb-2">
+                                <h3 className="font-serif text-2xl font-semibold text-stone-900 dark:text-stone-100 group-hover:text-gold-600 dark:group-hover:text-gold-400 transition-colors">
+                                    {product.name}
+                                </h3>
+                                <span className="font-serif text-lg font-medium text-gold-700 dark:text-gold-300 shrink-0 ml-2">
+                                    {formatMoney(product.price)} <span className="text-xs text-stone-400 font-sans">/m</span>
+                                </span>
+                            </div>
+
+                            <p className="text-stone-500 dark:text-stone-400 text-xs leading-relaxed mb-4 line-clamp-2 flex-1">
+                                {product.desc}
+                            </p>
+
+                            <div className="flex items-center justify-between pt-3 border-t border-stone-200/60 dark:border-noir-700/80 mt-auto">
+                                <span className="text-[11px] text-stone-400 font-medium">Khổ: {product.width}</span>
+                                
+                                <button 
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        onAddToCart(product, product.colors[0], 1);
+                                    }}
+                                    className="magnetic-btn text-xs font-semibold tracking-wider uppercase text-gold-600 dark:text-gold-400 hover:text-stone-900 dark:hover:text-white flex items-center gap-1.5"
+                                >
+                                    <span>Thêm Mẫu</span>
+                                    <i className="fa-solid fa-plus text-[10px]"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        /* MAIN APP: FABRICS CATALOG */
+        const FabricsCatalogApp = () => {
+            const [filter, setFilter] = useState('all');
+            const [selectedProduct, setSelectedProduct] = useState(null);
+
+            const filteredProducts = filter === 'all' 
+                ? productsData 
+                : productsData.filter(p => p.category === filter);
+
+            const handleAddToCart = (product, color, meters) => {
+                const cartCountEl = document.getElementById('cart-count');
+                const cartItemsContainer = document.getElementById('cart-items');
+                
+                if (cartCountEl) {
+                    const currentCount = parseInt(cartCountEl.textContent) || 0;
+                    cartCountEl.textContent = currentCount + 1;
+                    gsap.fromTo(cartCountEl, { scale: 1.6 }, { scale: 1, duration: 0.4, ease: "bounce.out" });
+                }
+
+                if (cartItemsContainer) {
+                    const newItemEl = document.createElement('div');
+                    newItemEl.className = 'flex items-center justify-between p-3 rounded-xl glass-card animate-fade-in';
+                    newItemEl.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <img src="${product.images[0]}" alt="${product.name}" class="w-14 h-14 object-cover rounded-lg">
+                            <div>
+                                <h4 class="text-xs font-semibold text-stone-800 dark:text-stone-200">${product.name}</h4>
+                                <span class="text-[10px] text-stone-400">Màu: ${color.name} • ${meters} mét</span>
+                                <div class="text-xs font-serif font-medium text-gold-600 dark:text-gold-400 mt-1">${formatMoney(product.price * meters)}</div>
+                            </div>
+                        </div>
+                        <button class="remove-item-btn text-stone-400 hover:text-red-500 text-xs p-2">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    `;
+                    cartItemsContainer.prepend(newItemEl);
+                }
+            };
+
+            return (
+                <section id="fabrics" className="py-28 px-6 md:px-12 max-w-7xl mx-auto">
+                    <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                        <div>
+                            <span className="text-[11px] uppercase tracking-[0.3em] font-semibold text-gold-600 dark:text-gold-400 block mb-3">
+                                Bộ Sưu Tập Giới Hạn Mùa Mới
+                            </span>
+                            <h2 className="font-serif text-3xl sm:text-5xl font-normal text-stone-900 dark:text-stone-50 tracking-tight leading-tight">
+                                Chất Liệu Tuyển Chọn <span className="italic font-light text-gold-600 dark:text-gold-400">Độc Bản</span>
+                            </h2>
+                        </div>
+                        
+                        <div className="flex flex-wrap gap-2 text-xs font-medium tracking-wider uppercase">
+                            <button 
+                                onClick={() => setFilter('all')}
+                                className={`px-4 py-2 rounded-full transition-all cursor-target ${filter === 'all' ? 'bg-stone-900 dark:bg-gold-500 text-white dark:text-noir-900' : 'glass-card hover:border-gold-500'}`}
+                            >
+                                Tất Cả
+                            </button>
+                            <button 
+                                onClick={() => setFilter('lua')}
+                                className={`px-4 py-2 rounded-full transition-all cursor-target ${filter === 'lua' ? 'bg-stone-900 dark:bg-gold-500 text-white dark:text-noir-900' : 'glass-card hover:border-gold-500'}`}
+                            >
+                                Lụa Tơ Tằm
+                            </button>
+                            <button 
+                                onClick={() => setFilter('cotton')}
+                                className={`px-4 py-2 rounded-full transition-all cursor-target ${filter === 'cotton' ? 'bg-stone-900 dark:bg-gold-500 text-white dark:text-noir-900' : 'glass-card hover:border-gold-500'}`}
+                            >
+                                Cotton Cao Cấp
+                            </button>
+                            <button 
+                                onClick={() => setFilter('linen')}
+                                className={`px-4 py-2 rounded-full transition-all cursor-target ${filter === 'linen' ? 'bg-stone-900 dark:bg-gold-500 text-white dark:text-noir-900' : 'glass-card hover:border-gold-500'}`}
+                            >
+                                Linen / Thô Đũi
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {filteredProducts.map(product => (
+                            <FabricCard 
+                                key={product.id} 
+                                product={product} 
+                                onSelect={(p) => setSelectedProduct(p)} 
+                                onAddToCart={handleAddToCart}
+                            />
+                        ))}
+                    </div>
+
+                    {selectedProduct && (
+                        <ProductDetailModal 
+                            product={selectedProduct} 
+                            onClose={() => setSelectedProduct(null)} 
+                            onAddToCart={handleAddToCart}
+                        />
+                    )}
+                </section>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('react-fabrics-app'));
+        root.render(<FabricsCatalogApp />);
+    </script>
+
+    <!-- ==================== JAVASCRIPT MASTER CONTROLLER ==================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            /* 1. CUSTOM CURSOR WITH LERP */
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorRing = document.querySelector('.cursor-ring');
+            let mouseX = -100, mouseY = -100;
+            let ringX = -100, ringY = -100;
+
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                cursorDot.style.left = `${mouseX}px`;
+                cursorDot.style.top = `${mouseY}px`;
+            });
+
+            gsap.ticker.add(() => {
+                ringX += (mouseX - ringX) * 0.15;
+                ringY += (mouseY - ringY) * 0.15;
+                cursorRing.style.left = `${ringX}px`;
+                cursorRing.style.top = `${ringY}px`;
+            });
+
+            document.body.addEventListener('mouseover', (e) => {
+                if (e.target.closest('.cursor-target, a, button, input')) {
+                    document.body.classList.add('cursor-hover');
+                }
+            });
+            document.body.addEventListener('mouseout', (e) => {
+                if (e.target.closest('.cursor-target, a, button, input')) {
+                    document.body.classList.remove('cursor-hover');
+                }
+            });
+
+            /* 2. THEME CONTROLLER */
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.theme = 'light';
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.theme = 'dark';
+                }
+            });
+
+            /* 3. SCROLL ANIMATIONS */
+            gsap.to("#hero-bg img", {
+                scrollTrigger: {
+                    trigger: "#hero",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: 1
+                },
+                y: 120,
+                scale: 1.2
+            });
+
+            gsap.utils.toArray('.scroll-reveal').forEach((elem) => {
+                gsap.fromTo(elem, 
+                    { opacity: 0, y: 45 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1.1,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: elem,
+                            start: "top 88%",
+                            toggleActions: "play none none none"
+                        }
+                    }
+                );
+            });
+
+            /* 4. SWATCH LAB SWITCHER */
+            const swatchButtons = document.querySelectorAll('.swatch-picker-btn');
+            const stageImage = document.getElementById('swatch-stage-image');
+            const stageTitle = document.getElementById('swatch-stage-title');
+            const stageSpecs = document.getElementById('swatch-stage-specs');
+
+            swatchButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    swatchButtons.forEach(b => {
+                        b.classList.remove('border-2', 'border-gold-500');
+                        b.classList.add('border', 'border-stone-300/80', 'dark:border-noir-700');
+                    });
+                    btn.classList.add('border-2', 'border-gold-500');
+                    btn.classList.remove('border-stone-300/80', 'dark:border-noir-700');
+
+                    gsap.to(stageImage, {
+                        opacity: 0.2,
+                        duration: 0.25,
+                        onComplete: () => {
+                            stageImage.src = btn.dataset.image;
+                            stageTitle.textContent = btn.dataset.title;
+                            stageSpecs.textContent = btn.dataset.specs;
+                            gsap.to(stageImage, { opacity: 1, duration: 0.4 });
+                        }
+                    });
+                });
+            });
+
+            /* 5. SHOPPING CART DRAWER */
+            const cartToggle = document.getElementById('cart-toggle');
+            const cartClose = document.getElementById('cart-close');
+            const cartDrawer = document.getElementById('cart-drawer');
+            const cartBackdrop = document.getElementById('cart-backdrop');
+            const cartPanel = document.getElementById('cart-panel');
+
+            const openCart = () => {
+                cartDrawer.classList.remove('pointer-events-none');
+                cartBackdrop.classList.remove('opacity-0');
+                cartBackdrop.classList.add('opacity-100');
+                cartPanel.classList.remove('translate-x-full');
+            };
+
+            const closeCart = () => {
+                cartBackdrop.classList.remove('opacity-100');
+                cartBackdrop.classList.add('opacity-0');
+                cartPanel.classList.add('translate-x-full');
+                setTimeout(() => {
+                    cartDrawer.classList.add('pointer-events-none');
+                }, 500);
+            };
+
+            cartToggle.addEventListener('click', openCart);
+            cartClose.addEventListener('click', closeCart);
+            cartBackdrop.addEventListener('click', closeCart);
+
+            document.getElementById('cart-items').addEventListener('click', (e) => {
+                const removeBtn = e.target.closest('.remove-item-btn');
+                if (removeBtn) {
+                    const item = removeBtn.closest('.glass-card');
+                    gsap.to(item, {
+                        x: 50,
+                        opacity: 0,
+                        duration: 0.3,
+                        onComplete: () => {
+                            item.remove();
+                            const cartCount = document.getElementById('cart-count');
+                            const count = Math.max(0, parseInt(cartCount.textContent) - 1);
+                            cartCount.textContent = count;
+                        }
+                    });
+                }
+            });
+
+            /* 6. MOBILE MENU */
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            let isMobileMenuOpen = false;
+
+            mobileMenuBtn.addEventListener('click', () => {
+                isMobileMenuOpen = !isMobileMenuOpen;
+                if (isMobileMenuOpen) {
+                    mobileMenu.classList.remove('pointer-events-none', 'opacity-0');
+                    mobileMenu.classList.add('opacity-100');
+                    mobileMenuBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+                } else {
+                    mobileMenu.classList.add('pointer-events-none', 'opacity-0');
+                    mobileMenu.classList.remove('opacity-100');
+                    mobileMenuBtn.innerHTML = '<i class="fa-solid fa-bars-staggered"></i>';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
